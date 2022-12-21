@@ -8,6 +8,16 @@
 #define MAXFILENAME 256
 #define BLOCKSIZE 4096
 
+static const char *Weekdays[] = {
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+     };
+
 int main(int argc, char *argv[]) {
     char devname[MAXFILENAME];
     strcpy (devname, argv[1]);
@@ -151,6 +161,50 @@ int main(int argc, char *argv[]) {
                 printf("i_generation: %u\n", inode->i_generation);
                 printf("i_file_acl: %u\n", inode->i_file_acl);
                 printf("i_dir_acl: %u\n", inode->i_dir_acl);
+
+                time_t curSec = inode->i_atime;
+                struct tm *curDate;
+                char dateString[32];
+                
+                curDate = localtime(&curSec);
+                sprintf(dateString,
+                    "%s-%02d/%02d/%d-%02d:%02d:%02d",
+                    Weekdays[curDate->tm_wday],
+                    curDate->tm_mday,
+                    curDate->tm_mon+1,
+                    curDate->tm_year+1900,                    
+                    curDate->tm_hour,
+                    curDate->tm_min,
+                    curDate->tm_sec);
+
+                printf("(i_atime): %s\n",dateString);
+
+                curSec = inode->i_ctime;
+                curDate = localtime(&curSec);
+                sprintf(dateString,
+                    "%s-%02d/%02d/%d-%02d:%02d:%02d",
+                    Weekdays[curDate->tm_wday],
+                    curDate->tm_mday,
+                    curDate->tm_mon+1,
+                    curDate->tm_year+1900,                    
+                    curDate->tm_hour,
+                    curDate->tm_min,
+                    curDate->tm_sec);
+                printf("(i_ctime): %s\n",dateString);
+
+                curSec = inode->i_mtime;
+
+                curDate = localtime(&curSec);
+                sprintf(dateString,
+                    "%s-%02d/%02d/%d-%02d:%02d:%02d",
+                    Weekdays[curDate->tm_wday],
+                    curDate->tm_mday,
+                    curDate->tm_mon+1,
+                    curDate->tm_year+1900,                    
+                    curDate->tm_hour,
+                    curDate->tm_min,
+                    curDate->tm_sec);
+                printf("(i_mtime): %s\n",dateString);
             }
 
             location += first_dir->rec_len;
