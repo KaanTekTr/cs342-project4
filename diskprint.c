@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
         printf("\n----------------- Part 2 ----------------\n");
         struct ext2_group_desc* group_descriptor = (struct ext2_group_desc*) &buffer[0];
 
-        printf("inodes table block: %u\n", group_descriptor->bg_inode_table); // prints that the inode table starts at block 4
+        //printf("inodes table block: %u\n", group_descriptor->bg_inode_table); // prints that the inode table starts at block 4
         inodeTableBlock = group_descriptor->bg_inode_table;
     }
 
@@ -101,8 +101,8 @@ int main(int argc, char *argv[]) {
     if (n == BLOCKSIZE) {
         struct ext2_inode* root_inode = (struct ext2_inode*) &buffer[0];
 
-        printf("i: %u\n", root_inode->i_block[0]); // prints that the root directory starts at block 36
-        printf("size: %u\n\n", root_inode->i_size); // prints that the size of the file is 4096
+        //printf("i: %u\n", root_inode->i_block[0]); // prints that the root directory starts at block 36
+        //printf("size: %u\n\n", root_inode->i_size); // prints that the size of the file is 4096
         rootDirectoryBlock = root_inode->i_block[0];
     }
 
@@ -138,7 +138,7 @@ int main(int argc, char *argv[]) {
     lseek(fd, offset, SEEK_SET);
     n = read (fd, buffer, BLOCKSIZE);
     if (n == BLOCKSIZE) {
-        printf("\n----------------- Part 3 ----------------\n");
+        printf("\n----------------- Part 3 ----------------");
         int location = 0;
 
         while ( location < BLOCKSIZE ) {
